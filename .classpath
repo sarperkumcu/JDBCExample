@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/ojdbc8.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/ons.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/oraclepki.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/orai18n.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/osdt_cert.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/osdt_core.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/simplefan.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/ucp.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/OJDBC8-Full/xdb6.jar"/>
+	<classpathentry kind="lib" path="/home/sarper/Downloads/apache-tomcat-9.0.7/webapps/ROOT/WEB-INF/lib/mysql-connector-java-8.0.11.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
