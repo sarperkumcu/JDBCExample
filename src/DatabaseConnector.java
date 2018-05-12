@@ -57,8 +57,8 @@ public class DatabaseConnector {
 				+ "Ilan_Fiyat INT NOT NULL, "
 				+ "Ilan_Km INT NOT NULL,"
 				+ "Ilan_Tarih DATE NOT NULL,"
-				+ "Ilan_ArabaID VARCHAR(10),"
-				+ "Ilan_SehirID VARCHAR(5),"
+				+ "Ilan_ArabaID INT,"
+				+ "Ilan_SehirID INT,"
 				+ "FOREIGN KEY (Ilan_ArabaID) REFERENCES Tbl_Araba(ArabaID),"
 				+ "FOREIGN KEY (Ilan_SehirID) REFERENCES Tbl_Sehir(SehirID),"
 				+ "PRIMARY KEY (IlanID) "
@@ -66,7 +66,7 @@ public class DatabaseConnector {
     	
     	String createTbl_Araba = 
     			"CREATE TABLE IF NOT EXISTS Tbl_Araba("
-				+ "ArabaID VARCHAR(10) NOT NULL, "
+				+ "ArabaID INT NOT NULL AUTO_INCREMENT, "
 				+ "Araba_Marka VARCHAR(20) NOT NULL, "
 				+ "Araba_Model VARCHAR(20) NOT NULL, "
 				+ "Araba_VitesTuruID INT,"
@@ -80,27 +80,27 @@ public class DatabaseConnector {
     	
     	String createTbl_YakitTuru = 
     			"CREATE TABLE IF NOT EXISTS Tbl_YakitTuru("
-				+ "YakitTuruID INT NOT NULL, "
+				+ "YakitTuruID INT NOT NULL AUTO_INCREMENT, "
 				+ "YakitTuru VARCHAR(20) NOT NULL, "
 				+ "PRIMARY KEY (YakitTuruID) "
 				+ ")";
     	
      	String createTbl_VitesTuru = 
     			"CREATE TABLE IF NOT EXISTS Tbl_VitesTuru("
-				+ "VitesTuruID INT NOT NULL, "
+				+ "VitesTuruID INT NOT NULL AUTO_INCREMENT, "
 				+ "VitesTuru VARCHAR(20) NOT NULL, "
 				+ "PRIMARY KEY (VitesTuruID) "
 				+ ")";
     	
     	String createTbl_Renk =
     			"CREATE TABLE IF NOT EXISTS Tbl_Renk("
-    			+ "RenkID INT NOT NULL,"
+    			+ "RenkID INT NOT NULL AUTO_INCREMENT,"
     			+ "Renk VARCHAR(10) NOT NULL,"
     			+ "PRIMARY KEY (RenkID) "
 				+ ")";
     	String createTbl_Sehir =
     			"CREATE TABLE IF NOT EXISTS Tbl_Sehir("
-    			+ "SehirID VARCHAR(5) NOT NULL,"
+    			+ "SehirID INT NOT NULL AUTO_INCREMENT,"
     			+ "Sehir VARCHAR(12) NOT NULL,"
     			+ "PRIMARY KEY (SehirID) "
 				+ ")";
@@ -302,4 +302,75 @@ public class DatabaseConnector {
 		}
 
 	}
+    
+    public void insertRecord(Connection connection,String name) {
+    	Statement statement = null;
+    	String insertTableSQL = "sa";
+    //	if(button.equals("btnSave")) {
+    		insertTableSQL = "INSERT INTO Tbl_YakitTuru"
+				+ "(YakitTuru) " 
+    			+ "VALUES"
+				+ "('"+ name + "')";
+    	//}
+		
+
+		try {
+			statement = connection.createStatement();
+
+			System.out.println(insertTableSQL);
+
+			statement.executeUpdate(insertTableSQL);
+
+			System.out.println("Record was inserted into table.");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+    }
+    
+    public void deleteRecord(Connection connection,String ID,String table) {
+    	Statement statement = null;
+
+		String deleteTableSQL = "DELETE FROM "  + table + " WHERE YakitTuruID = " + Integer.parseInt(ID);
+
+		try {
+			statement = connection.createStatement();
+
+			System.out.println(deleteTableSQL);
+
+			// execute delete SQL stetement
+			statement.execute(deleteTableSQL);
+
+			System.out.println("Record was deleted table!");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+    }
     }

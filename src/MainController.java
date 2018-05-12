@@ -9,18 +9,35 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class MainController {
 
 	private JFrame frame;
 	private JTextField txtFuelType;
+	private JTextField fuel_insert_textField;
+	private final String fuelTableName = "Tbl_YakitTuru";
+	private final String transmissionTableName = "Tbl_VitesTuru";
+	private final String cityTableName = "Tbl_Sehir";
+	private final String adTableName = "Tbl_Ilan";
+	private final String carTableName = "Tbl_Araba";
+	private final String colorTableName = "Tbl_Renk";
+
 
 	/**
 	 * Launch the application.
 	 */
+	static DatabaseConnector dbc = new DatabaseConnector();
+	static Connection conn;
+	private JTable fuel_table;
 	public static void main(String[] args) {
-		DatabaseConnector dbc = new DatabaseConnector();
-		Connection conn = dbc.connectDatabase();
+		 conn = dbc.connectDatabase();
 		dbc.createTables(conn);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -85,6 +102,51 @@ public class MainController {
 		//update_data.add(color, "name_15544891609718");
 
 		update_menu_tabbed.addTab("Fuel", fuel);
+		fuel.setLayout(null);
+		
+		fuel_insert_textField = new JTextField();
+		fuel_insert_textField.setBounds(100, 50, 114, 19);
+		fuel.add(fuel_insert_textField);
+		fuel_insert_textField.setColumns(10);
+		
+		JLabel lblTypeName = new JLabel("Type Name");
+		lblTypeName.setBounds(12, 52, 93, 19);
+		fuel.add(lblTypeName);
+		
+		JButton fuel_btnSave = new JButton("Save");
+		fuel_btnSave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(!fuel_insert_textField.getText().trim().isEmpty()) {
+					dbc.insertRecord(conn,fuel_insert_textField.getText());
+				}
+			}
+		});
+		fuel_btnSave.setBounds(56, 106, 117, 25);
+		fuel.add(fuel_btnSave);
+		String col[] = {"ID","Fuel Type"};
+		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+		Object[] objs = {1, "Arsenal"};
+		tableModel.addRow(objs);
+				
+				JButton fuel_btnDelete = new JButton("Delete");
+				fuel_btnDelete.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						int row = fuel_table.getSelectedRow();
+						String value = fuel_table.getModel().getValueAt(row, 0).toString();
+						dbc.deleteRecord(conn,value,fuelTableName);
+					}
+				});
+				fuel_btnDelete.setBounds(588, 493, 117, 25);
+				fuel.add(fuel_btnDelete);
+				
+				JScrollPane fuel_scrollPane = new JScrollPane(fuel_table);
+				fuel_scrollPane.setBounds(28, 303, 421, 290);
+				fuel.add(fuel_scrollPane);
+				
+						fuel_table = new JTable(tableModel);
+						fuel_scrollPane.setViewportView(fuel_table);
 		
 		frame.setVisible(true);
 	}
