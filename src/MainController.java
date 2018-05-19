@@ -12,8 +12,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.JLabel;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -38,20 +41,27 @@ public class MainController {
 	static String colCity[] = { "ID", "City Name" };
 	static String colTransmission[] = { "ID", "Transmission Types" };
 	static String colCar[] = { "ID", "Brand", "Model", "Fuel", "Transmission", "Color" };
+	static String colAd[] = { "ID", "Ad","Price","Km","Date","Car ID","City" };
+
 
 	private static DefaultTableModel fuel_tableModel = new DefaultTableModel(colFuel, 0);
 	private static DefaultTableModel color_tableModel = new DefaultTableModel(colColor, 0);
 	private static DefaultTableModel city_tableModel = new DefaultTableModel(colCity, 0);
 	private static DefaultTableModel transmission_tableModel = new DefaultTableModel(colTransmission, 0);
 	private static DefaultTableModel car_tableModel = new DefaultTableModel(colCar, 0);
+	private static DefaultTableModel ad_tableModel = new DefaultTableModel(colAd,0);
 	
 	DefaultComboBoxModel carPageTransmissionTypeModel;
 	DefaultComboBoxModel carPageFuelModel;
 	DefaultComboBoxModel carPageColorModel;
+	DefaultComboBoxModel adPageCarModel;
+	DefaultComboBoxModel adPageCityModel;
 	
 	JComboBox fuel_comboBox = new JComboBox();
 	JComboBox color_comboBox = new JComboBox();
 	JComboBox transmission_comboBox = new JComboBox();
+	JComboBox adCar_comboBox = new JComboBox();
+	JComboBox adCity_comboBox = new JComboBox();
 
 	
 	/**
@@ -77,6 +87,12 @@ public class MainController {
 	private JTextField carModel_insert_textField;
 	private JTable car_table;
 	private JTextField carBrand_insert_textField;
+	
+	
+	private JTable ad_table;
+	private JTextField adAd_insert_textField;
+	private JTextField adPrice_insert_textField;
+	private JTextField adKm_insert_textField;
 
 	public static void main(String[] args) {
 		conn = dbc.connectDatabase();
@@ -307,6 +323,122 @@ public class MainController {
 
 		JPanel ad = new JPanel();
 		update_menu_tabbed.addTab("Ad", ad);
+		ad.setLayout(null);
+
+		/*adModel_insert_textField = new JTextField();
+		adModel_insert_textField.setBounds(100, 50, 114, 19);
+		ad.add(adModel_insert_textField);
+		adModel_insert_textField.setColumns(10);
+
+		JLabel lblAdModel = new JLabel("Ad Model");
+		lblCarModel.setBounds(12, 52, 93, 19);
+		car.add(lblCarModel);*/
+		ad_table = new JTable(ad_tableModel);
+		updateAdTable();
+
+		JScrollPane ad_scrollPane = new JScrollPane(ad_table);
+		ad_scrollPane.setBounds(12, 186, 1400, 390);
+		ad.add(ad_scrollPane);
+		ad_scrollPane.setViewportView(ad_table);
+		ad_table.getColumnModel().getColumn(1).setPreferredWidth(600);
+		ad_table.getModel().addTableModelListener(new TableModelListener() {
+
+			public void tableChanged(TableModelEvent e) {
+				if (e.getType() == TableModelEvent.UPDATE) {
+					int col = ad_table.getSelectedColumn();
+					int row = ad_table.getSelectedRow();
+					System.out.println("Fafafaf " + row);
+
+					if (row != -1) {
+						String value = ad_table.getModel().getValueAt(row, 0).toString();
+						dbc.updateRecord(conn, value, "Tbl_Ilan", row, car_tableModel);
+					}
+
+					updateAdTable();
+					ad_scrollPane.setViewportView(ad_table);
+				}
+			}
+		});
+
+		JButton ad_btnSave = new JButton("Save");
+		ad_btnSave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+					String[] datas = { adAd_insert_textField.getText(), adPrice_insert_textField.getText(), 
+							adKm_insert_textField.getText(),adCity_comboBox.getSelectedItem().toString(),adCar_comboBox.getSelectedItem().toString()};
+					
+					dbc.insertRecord(conn, "Tbl_Ilan", datas);
+					updateAdTable();
+					ad_scrollPane.setViewportView(ad_table);
+			}
+		});
+		ad_btnSave.setBounds(139, 124, 117, 25);
+
+		ad.add(ad_btnSave);
+
+		JButton ad_btnDelete = new JButton("Delete");
+		ad_btnDelete.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = ad_table.getSelectedRow();
+				System.out.println("Fransa: " + row);
+				if (row != -1) {
+					String value = ad_table.getModel().getValueAt(row, 0).toString();
+					dbc.deleteRecord(conn, value, adTableName);
+				}
+
+				updateAdTable();
+				ad_scrollPane.setViewportView(ad_table);
+			}
+		});
+		ad_btnDelete.setBounds(314, 622, 117, 25);
+		ad.add(ad_btnDelete);
+		
+		adAd_insert_textField = new JTextField();
+		adAd_insert_textField.setBounds(12, 78, 424, 19);
+		ad.add(adAd_insert_textField);
+		adAd_insert_textField.setColumns(10);
+		
+		JLabel lblAd = new JLabel("AD");
+		lblAd.setBounds(193, 51, 70, 15);
+		ad.add(lblAd);
+		
+		JLabel lblPrice = new JLabel("Price");
+		lblPrice.setBounds(517, 51, 70, 15);
+		ad.add(lblPrice);
+		
+		adPrice_insert_textField = new JTextField();
+		adPrice_insert_textField.setBounds(568, 49, 114, 19);
+		ad.add(adPrice_insert_textField);
+		adPrice_insert_textField.setColumns(10);
+		
+		JLabel lblKm = new JLabel("Km");
+		lblKm.setBounds(527, 80, 70, 15);
+		ad.add(lblKm);
+		
+		adKm_insert_textField = new JTextField();
+		adKm_insert_textField.setBounds(568, 78, 114, 19);
+		ad.add(adKm_insert_textField);
+		adKm_insert_textField.setColumns(10);
+		
+		JLabel lblCar = new JLabel("Car");
+		lblCar.setBounds(517, 106, 70, 15);
+		ad.add(lblCar);
+		
+		adCar_comboBox.setBounds(504, 126, 58, 21);
+		adPageCarModel = new DefaultComboBoxModel(dbc.getCarIDs(conn).toArray());
+		adCar_comboBox.setModel(adPageCarModel);
+		ad.add(adCar_comboBox);
+		
+		JLabel lblCity = new JLabel("City");
+		lblCity.setBounds(612, 106, 70, 15);
+		ad.add(lblCity);
+		
+		adCity_comboBox.setBounds(612, 124, 60, 24);
+		adPageCityModel = new DefaultComboBoxModel(dbc.getCityNames(conn).toArray());
+		adCity_comboBox.setModel(adPageCityModel);
+		ad.add(adCity_comboBox);
+		
 
 		/************
 		 * 
@@ -529,6 +661,14 @@ public class MainController {
 		lblCarModel.setBounds(12, 52, 93, 19);
 		car.add(lblCarModel);
 		car_table = new JTable(car_tableModel);
+		
+	/*	TableColumn car_fuelTypeColumn = car_table.getColumnModel().getColumn(3);
+		car_fuelTypeColumn.setCellEditor(new DefaultCellEditor(fuel_comboBox));
+		//Set up tool tips for the sport cells.
+        DefaultTableCellRenderer renderer =
+                new DefaultTableCellRenderer();
+        renderer.setToolTipText("Click for combo box");
+        car_fuelTypeColumn.setCellRenderer(renderer);*/
 		updateCarTable();
 
 		JScrollPane car_scrollPane = new JScrollPane(car_table);
@@ -545,7 +685,7 @@ public class MainController {
 
 					if (row != -1) {
 						String value = car_table.getModel().getValueAt(row, 0).toString();
-						dbc.updateRecord(conn, value, "Tbl_Araba", row, car_tableModel);
+						dbc.updateRecord(conn, value, "Tbl_Araba", row,col, car_tableModel);
 					}
 
 					updateCarTable();
@@ -589,7 +729,7 @@ public class MainController {
 		});
 		car_btnDelete.setBounds(314, 622, 117, 25);
 		car.add(car_btnDelete);
-
+		
 		JLabel lblCarBrand = new JLabel("Car Brand");
 		lblCarBrand.setBounds(232, 52, 70, 15);
 		car.add(lblCarBrand);
@@ -616,7 +756,7 @@ public class MainController {
 		carPageFuelModel = new DefaultComboBoxModel(dbc.getFuelTypes(conn).toArray());
 		fuel_comboBox.setModel(carPageFuelModel);
 		car.add(fuel_comboBox);
-
+	
 		JLabel lblColor = new JLabel("Color");
 		lblColor.setBounds(491, 144, 70, 15);
 		car.add(lblColor);
@@ -653,6 +793,7 @@ public class MainController {
 				city_tableModel.addRow(data);
 			}
 		}
+		updateAdTable();
 	}
 
 	public void updateColorTable() {
@@ -691,6 +832,18 @@ public class MainController {
 				Object[] data = { ((Car) o).getCarID(), ((Car) o).getCarBrand(), ((Car) o).getCarModel(),
 						((Car) o).getFuelType(), ((Car) o).getTransmissionType(), ((Car) o).getColorName() };
 				car_tableModel.addRow(data);
+			}
+		}
+		updateAdTable();
+	}
+	public void updateAdTable() {
+		ad_tableModel.setRowCount(0);
+		ArrayList<Object> adObjs = dbc.selectAllQuery("Tbl_Ilan", conn);
+		for (Object o : adObjs) {
+			if (o instanceof Ad) {
+				Object[] data = { ((Ad) o).getAdID(), ((Ad) o).getAdName(), ((Ad) o).getPrice(),
+						((Ad) o).getKm(), ((Ad) o).getDate(), ((Ad) o).getCarID(),((Ad) o).getCityName() };
+				ad_tableModel.addRow(data);
 			}
 		}
 	}

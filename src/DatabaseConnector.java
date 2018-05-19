@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -55,7 +56,7 @@ public class DatabaseConnector {
     	String createTbl_Ilan = 
     			"CREATE TABLE IF NOT EXISTS Tbl_Ilan("
 				+ "IlanID int NOT NULL AUTO_INCREMENT, "
-				+ "Ilan_Adi VARCHAR(20) NOT NULL, "
+				+ "Ilan_Adi VARCHAR(100) NOT NULL, "
 				+ "Ilan_Fiyat INT NOT NULL, "
 				+ "Ilan_Km INT NOT NULL,"
 				+ "Ilan_Tarih DATE NOT NULL,"
@@ -70,7 +71,7 @@ public class DatabaseConnector {
     			"CREATE TABLE IF NOT EXISTS Tbl_Araba("
 				+ "ArabaID INT NOT NULL AUTO_INCREMENT, "
 				+ "Araba_Marka VARCHAR(20) NOT NULL, "
-				+ "Araba_Model VARCHAR(20) NOT NULL, "
+				+ "Araba_Model VARCHAR(50) NOT NULL, "
 				+ "Araba_VitesTuruID INT,"
 				+ "Araba_YakitTuruID INT,"
 				+ "Araba_RenkID INT,"
@@ -158,7 +159,7 @@ public class DatabaseConnector {
     	
     	String initRenk =
     			"INSERT IGNORE INTO Tbl_Renk" 
-    		+	"( Renk)"
+    		+	"(Renk)"
     		+	"VALUES"
       		+	"('Black'),"
     		+	"('White'),"
@@ -198,9 +199,66 @@ public class DatabaseConnector {
     		    +	"('Mercedes - Benz','C 200 D BlueTEC',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
     		    +	"('Mercedes - Benz','E 400 CDI Avantgarde',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Blue')),"
     		    +	"('Mercedes - Benz','C180 Exclusivea',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Manual'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Red')),"
-    		    +	"('Mercedes - Benz','C 200d AMG',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'LPG'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Red'))";
-    	   	
-    	
+    		    +	"('Mercedes - Benz','C 200d AMG',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'LPG'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Red')),"
+    	   		+	"('Saab','2.0 TS Aero',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+    			+	"('Audi','A4',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+				+	"('Honda','1.3 Elegance',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+				+	"('Volkswagen','1.6 TDi BlueMotion Trendline',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
+				+	"('Audi','3.0 TDi Quattro',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+				+	"('Ford','1.5 TDCi ST Line',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Blue')),"
+				+	"('Fiat','1.6 Liberty',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Manual'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Gray')),"
+				+	"('Porsche','Carrera S',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+				+	"('Mercedes','E 180 Premium',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
+				+	"('Mini','1.5 Premium',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
+				+	"('Maserati','3.0',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Turkuaz')),"
+				+	"('Mercedes','E 200 AMG',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+				+	"('Audi','A4 Sedan 2.0 TDI',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
+				+	"('Mercedes','180 d AMG',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
+				+	"('Mercedes','S 350 BlueTEC',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+				+	"('Volkswagen','1.6 TDi BlueMotion Impression',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
+				+	"('Citroen','C4 1.6 BlueHDi',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Gray')),"
+				+	"('Renault','1.6 Joy',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Manual'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'LPG'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White'))";
+    		
+    	String initIlan = 
+    			"INSERT INTO Tbl_Ilan"
+    			+	"(Ilan_Adi,Ilan_Fiyat,Ilan_Km,Ilan_Tarih,Ilan_SehirID,Ilan_ArabaID)"
+    			+	"VALUES"
+    			+	"('FIRSATTIR - Ilk Sahibinden -250 Hp - Orjinal', "
+    			+	"49500,119500,'2018-05-17',1,5),"
+    			+ 	"('TERTEMIZ AUDI A4 SIFIR SANSIMAN 8 ILERI TAM OTOMATIK',"
+    			+	"102000,196000,'2018-05-18',1,6),"
+    			+ 	"('SAHIBINDEN OTOMATIK FULL+FULL SIFIR AYARINDA',"
+    			+	"75500,18000,'2018-05-17',10,7),"
+    			+ 	"('MSG MOTORS GUVENCESIYLE VW PASSAT 1.6 TDI DSG',"
+    			+	"125000,67082,'2018-05-04',8,8),"
+    			+ 	"('BLACK MOTORS 2011 MODEL AUDI A7 3.0 TDI QUATTRO BAYI CIKISLI',"
+    			+	"253000,183000,'2018-05-15',4,9),"
+    			+ 	"('SAHIBINDEN FORD FOCUS ST LINE 1.5 TDCI POWERSHIFT',"
+    			+	"112999,13000,'2018-04-30',2,10),"
+    			+ 	"('Fiat Marea Sorunsuz Bakimli KELEPIR...!!!',"
+    			+	"23000,18300,'2018-05-18',5,11),"
+    			+ 	"('AUTOSTORE 2012 PORSCHE 911 CARRERA S-SPORT CRONO PDKLI 54.395 KM',"
+    			+	"630000,54395,'2018-05-04',3,12),"
+    			+ 	"('Hatasiz mercedes e 180',"
+    			+	"192000,79000,'2018-05-17',2,13),"
+    			+ 	"('Sahibinden 2016 CABRIO Borusan Premium paket full+full !!!',"
+    			+	"124500,29000,'2018-05-17',6,14),"
+    			+ 	"('Sahibinden Fermas Cikisli',"
+    			+	"580000,16000,'2018-04-15',7,15),"
+    			+ 	"('AUTOSTORE 2016 MERCEDES E200 AMG 9G-TRONIC - 9.748 km',"
+    			+	"285000,9748,'2018-05-11',2,16),"
+    			+ 	"('Orjinal S-Line. Degisensiz Tramersiz !!',"
+    			+	"125500,194000,'2018-03-27',5,17),"
+    			+ 	"('2016 Model CLA 180 d AMG beyaz ORJINAL',"
+    			+	"170000,25000,'2018-04-30',1,18),"
+    			+ 	"('AUTOSTORE 2015 MERCEDES S350 BLUETEC LONG 4 MATIC VIZYON - BAYI',"
+    			+	"735000,101460,'2018-05-11',8,19),"
+    			+ 	"('BOYASIZ -2018- VW PASSAT 1.6TDi IMPRESSION DSG - 10.123 KM',"
+    			+	"156750,10123,'2018-04-30',2,20),"
+    			+ 	"('2015 Y.KASA C4 1.6 B.HDI 120 HP T.OTOMATIK NAVI ANINDA KREDI ILE',"
+    			+	"69750,38000,'2018-05-15',4,21),"
+    			+ 	"('ACIL-KAZASIZ-BOYASIZ-LED PAKET - GORUS PAKET - %100 Uyumlu LPG',"
+    			+	"74000,12000,'2018-05-15',11,22)";
     	try {
 			statement = connection.createStatement();
 			statement.executeUpdate(initYakitTuru);
@@ -208,6 +266,7 @@ public class DatabaseConnector {
 			statement.executeUpdate(initRenk);
 			statement.executeUpdate(initSehir);
 			statement.executeUpdate(initAraba);
+			statement.executeUpdate(initIlan);
 		
 			System.out.println("All Fine.");
 			
@@ -324,6 +383,34 @@ public class DatabaseConnector {
 
 				}
 				
+				if(tableName.equals("Tbl_Ilan")) {
+					ArrayList<Object> ads= new ArrayList<>();
+					while (rs.next()) {
+						Ad ad= new Ad();
+						Integer adID = rs.getInt("IlanID");
+						String adName= rs.getString("Ilan_Adi");
+						Integer price= rs.getInt("Ilan_Fiyat");
+						Integer km= rs.getInt("Ilan_Km");
+						Date date= rs.getDate("Ilan_Tarih");
+						Integer carID = rs.getInt("Ilan_ArabaID");
+						Integer cityID = rs.getInt("Ilan_SehirID");
+						String cityName = selectCertainData(conn, "Tbl_Sehir", "Sehir", "SehirID", cityID);
+							
+						ad.setAdID(adID);
+						ad.setAdName(adName);
+						ad.setPrice(price);
+						ad.setKm(km);
+						ad.setDate(date);
+						ad.setCarID(carID);
+						ad.setCityID(cityID);
+						ad.setCityName(cityName);
+						
+						ads.add(ad);
+					}
+					return ads;
+
+				}
+				
 				
 
 			
@@ -415,6 +502,12 @@ public class DatabaseConnector {
     			+ "VALUES"
 				+ "('"+ datas[0] + "','" + datas[1] + "',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = '" + datas[2] + "'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = '" + datas[3] + "'),(SELECT RenkID from Tbl_Renk WHERE Renk = '" + datas[4] + "'))";
     	}
+    	if(tableName.equals("Tbl_Ilan")) {
+    		insertTableSQL = "INSERT INTO Tbl_Ilan"
+				+ "(Ilan_Adi,Ilan_Fiyat,Ilan_Km,Ilan_Tarih,Ilan_ArabaID,Ilan_SehirID)"
+    			+ "VALUES"
+				+ "('"+ datas[0] + "'," + datas[1] + "," + datas[2] + ",CURDATE()," + datas[4] + ",(SELECT SehirID from Tbl_Sehir WHERE Sehir = '" + datas[3] + "'))";
+    	}
     	
 
 		try {
@@ -492,6 +585,46 @@ public class DatabaseConnector {
 
 		}
 
+    }
+    public void updateRecord(Connection connection, String id, String tableName,Integer row,Integer col, DefaultTableModel dtm) {
+    	String query = "sa";
+    	PreparedStatement ps = null;
+    	if(tableName.equals("Tbl_Araba")) {
+			try {
+				if(col == 1) {
+					query = "UPDATE "+ tableName +" SET Araba_Marka = ? WHERE ArabaID = "+id;
+					 ps = connection.prepareStatement(query);
+			         ps.setString(1, (String) dtm.getValueAt(row, 1));
+				}
+				if(col == 2) {
+					query = "UPDATE "+ tableName +" SET Araba_Model= ? WHERE ArabaID = "+id;
+					ps = connection.prepareStatement(query);
+			         ps.setString(1, (String) dtm.getValueAt(row, 2));
+				}
+				if(col == 3) {
+					query = "UPDATE "+ tableName +" SET Araba_VitesTuruID = ? WHERE ArabaID = "+id;
+					ps = connection.prepareStatement(query);
+			         ps.setString(1, (String) dtm.getValueAt(row, 3));
+				}
+				if(col == 4) {
+					query = "UPDATE "+ tableName +" SET Araba_YakitTuruID = ? WHERE ArabaID = "+id;
+					 ps = connection.prepareStatement(query);
+			         ps.setString(1, (String) dtm.getValueAt(row, 4));
+				}
+				if(col == 5) {
+					query = "UPDATE "+ tableName +" SET Araba_RenkID = ? WHERE ArabaID = "+id;
+					ps = connection.prepareStatement(query);
+			         ps.setString(1, (String) dtm.getValueAt(row, 5));
+				}
+		    
+
+         ps.executeUpdate(); 
+         ps.close();
+
+     } catch (Exception ex) {
+         System.out.println("An error occured");
+     }
+	}
     }
     
     public void updateRecord(Connection connection, String id, String tableName,Integer row, DefaultTableModel dtm) {
@@ -648,11 +781,73 @@ public class DatabaseConnector {
 
 		}
 
-    	
-    	
     	return fuelTypes;
     }
-    
+
+    public ArrayList<String> getCityNames(Connection connection){
+    	ArrayList<String> cities = new ArrayList<String>();
+    	String query = "SELECT Sehir FROM Tbl_Sehir ORDER BY Sehir"; 
+    	PreparedStatement stm;
+    	ResultSet rs = null;
+		try {
+			stm = connection.prepareStatement(query);
+		
+
+    	 rs = stm.executeQuery(query); 
+
+    	while (rs.next()) { 
+    	    String city = rs.getString("Sehir"); 
+    	    // add group names to the array list
+    	    cities.add(city);
+    	} 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			    	try {
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+
+		}
+
+    	
+    	
+    	return cities;
+    }
+    public ArrayList<String> getCarIDs(Connection connection){
+    	ArrayList<String> carIDs = new ArrayList<String>();
+    	String query = "SELECT ArabaID FROM Tbl_Araba ORDER BY ArabaID"; 
+    	PreparedStatement stm;
+    	ResultSet rs = null;
+		try {
+			stm = connection.prepareStatement(query);
+		
+
+    	 rs = stm.executeQuery(query); 
+
+    	while (rs.next()) { 
+    	    String carID = rs.getString("ArabaID"); 
+    	    // add group names to the array list
+    	    carIDs.add(carID);
+    	} 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			    	try {
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+
+		}
+    	
+    	return carIDs;
+    }
     
     public String selectCertainData(Connection connection, String tableName, String dataName, String IDName, Integer ID) {
     	String data = "problem:)";
