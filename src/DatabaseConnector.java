@@ -233,8 +233,16 @@ public class DatabaseConnector {
 				+	"('Mercedes - Benz','S',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Half Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
 				+	"('Volkswagen','Passat',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
 				+	"('Citroen','Confort',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Gray')),"
-				+	"('Renault','Megane',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Manual'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'LPG'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White'))";
-    		
+				+	"('Audi','A4',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+				+	"('Audi','A4',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Red')),"
+				+	"('Audi','A4',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Blue')),"
+				+	"('Audi','A4',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Green')),"
+				+	"('Audi','A4',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Diesel'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
+				+	"('Mini','Cooper',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'White')),"
+				+	"('Mini','Cooper',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Turkuaz')),"
+				+	"('Mini','Cooper',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Black')),"
+				+	"('Mini','Cooper',(SELECT VitesTuruID from Tbl_VitesTuru WHERE VitesTuru = 'Automatic'),(SELECT YakitTuruID from Tbl_YakitTuru WHERE YakitTuru = 'Gasoline'),(SELECT RenkID from Tbl_Renk WHERE Renk = 'Gray'))";
+
     	String initIlan = 
     			"INSERT INTO Tbl_Ilan"
     			+	"(Ilan_Adi,Ilan_Fiyat,Ilan_Km,Ilan_Tarih,Ilan_SehirID,Ilan_ArabaID)"
@@ -274,7 +282,31 @@ public class DatabaseConnector {
     			+ 	"('2015 Y.KASA C4 1.6 B.HDI 120 HP T.OTOMATIK NAVI ANINDA KREDI ILE',"
     			+	"69750,38000,'2018-05-15',4,21),"
     			+ 	"('ACIL-KAZASIZ-BOYASIZ-LED PAKET - GORUS PAKET - %100 Uyumlu LPG',"
-    			+	"74000,12000,'2018-05-15',11,22)";
+    			+	"74000,12000,'2018-05-15',11,22),"
+    			+ 	"('DOKTORDAN AZ KULLANILMIS A4',"
+    			+	"80000,10000,'2018-05-20',1,23),"
+    			+ 	"('SIFIR FABRIKA CIKISLI AUDI A4',"
+    			+	"100000,0,'2018-05-19',7,24),"
+    			+ 	"('ACIL SATILIK A4',"
+    			+	"87000,50000,'2018-05-15',4,25),"
+    			+ 	"('BAYANDAN ACIL SATILIK TEMIZ A4',"
+    			+	"95000,26750,'2018-05-15',6,26),"
+    			+ 	"('SIFIR MERCEDES FABRIKA CIKISLI',"
+    			+	"150000,0,'2018-05-15',11,1),"
+    			+ 	"('ACIL-KAZASIZ-BOYASIZ MERCEDES E',"
+    			+	"74000,12000,'2018-05-15',11,2),"
+    			+ 	"('MEMURDAN SATILIK MERCEDES',"
+    			+	"120000,27000,'2018-05-15',3,3),"
+    			+ 	"('IHTIYAC YUZUNDEN ACIL SATILIK MERCEDES C',"
+    			+	"100000,49000,'2018-04-15',11,4),"
+    			+ 	"('ACIL SATILIK MINI COOPER',"
+    			+	"80000,10000,'2018-05-20',1,27),"
+    			+ 	"('ILK SAHIBINDEN SATILIK MINI COOOPER',"
+    			+	"100000,0,'2018-05-19',7,28),"
+    			+ 	"('BAYAN DOKTORDAN SATILIK MINICOOPER',"
+    			+	"87000,50000,'2018-05-15',4,29),"
+    			+ 	"('TEMIIIIZ MINI COOPER',"
+    			+	"95000,26750,'2018-05-15',6,30)";
     	try {
 			statement = connection.createStatement();
 			statement.executeUpdate(initYakitTuru);
@@ -737,20 +769,65 @@ public class DatabaseConnector {
 					ps = connection.prepareStatement(query);
 			         ps.setString(1, (String) dtm.getValueAt(row, 2));
 				}
-				if(col == 3) {
-					query = "UPDATE "+ tableName +" SET Araba_VitesTuruID = ? WHERE ArabaID = "+id;
-					ps = connection.prepareStatement(query);
-			         ps.setString(1, (String) dtm.getValueAt(row, 3));
-				}
 				if(col == 4) {
+					query = "UPDATE "+ tableName +" SET Araba_VitesTuruID = ? WHERE ArabaID = "+id;
+					 ps = connection.prepareStatement(query);
+					 String data = idToData(connection, "VitesTuruID", "Tbl_VitesTuru", "VitesTuru", (String) dtm.getValueAt(row, 4));
+			         ps.setString(1, data);
+				}
+				if(col == 3) {
 					query = "UPDATE "+ tableName +" SET Araba_YakitTuruID = ? WHERE ArabaID = "+id;
 					 ps = connection.prepareStatement(query);
-			         ps.setString(1, (String) dtm.getValueAt(row, 4));
+					 String data = idToData(connection, "YakitTuruID", "Tbl_YakitTuru", "YakitTuru", (String) dtm.getValueAt(row, 3));
+			         ps.setString(1, data);
 				}
 				if(col == 5) {
 					query = "UPDATE "+ tableName +" SET Araba_RenkID = ? WHERE ArabaID = "+id;
+					 ps = connection.prepareStatement(query);
+					 String data = idToData(connection, "RenkID", "Tbl_Renk", "Renk", (String) dtm.getValueAt(row, 5));
+			         ps.setString(1, data);
+				}
+		    
+
+         ps.executeUpdate(); 
+         ps.close();
+
+     } catch (Exception ex) {
+         System.out.println("An error occured");
+     }
+	}
+    	if(tableName.equals("Tbl_Ilan")) {
+			try {
+				if(col == 1) {
+					query = "UPDATE "+ tableName +" SET Ilan_Adi = ? WHERE IlanID = "+id;
+					 ps = connection.prepareStatement(query);
+			         ps.setString(1, (String) dtm.getValueAt(row, 1));
+				}
+				if(col == 2) {
+					query = "UPDATE "+ tableName +" SET Ilan_Fiyat = ? WHERE IlanID = "+id;
 					ps = connection.prepareStatement(query);
+			         ps.setString(1, (String) dtm.getValueAt(row, 2));
+				}
+				if(col == 3) {
+					query = "UPDATE "+ tableName +" SET Ilan_Km = ? WHERE IlanID = "+id;
+					 ps = connection.prepareStatement(query);
+			         ps.setString(1, (String) dtm.getValueAt(row, 3));
+				}
+				if(col == 4) {
+					query = "UPDATE "+ tableName +" SET Ilan_Tarih = ? WHERE IlanID = "+id;
+					 ps = connection.prepareStatement(query);
+			         ps.setString(1,  (String) dtm.getValueAt(row, 4));
+				}
+				if(col == 5) {
+					query = "UPDATE "+ tableName +" SET Ilan_ArabaID = ? WHERE IlanID = "+id;
+					 ps = connection.prepareStatement(query);
 			         ps.setString(1, (String) dtm.getValueAt(row, 5));
+				}
+				if(col == 6) {
+					query = "UPDATE "+ tableName +" SET Ilan_SehirID = ? WHERE IlanID = "+id;
+					 ps = connection.prepareStatement(query);
+					 String data = idToData(connection, "SehirID", "Tbl_Sehir", "Sehir", (String) dtm.getValueAt(row, 6));
+			         ps.setString(1, data);
 				}
 		    
 
@@ -1017,6 +1094,54 @@ public class DatabaseConnector {
     	return carModels;
     }
     
+    public ArrayList<String> getCarModels(Connection connection,Object [] brands){
+    	ArrayList<String> carModels = new ArrayList<String>();
+    	String query = "SELECT DISTINCT Araba_Model FROM Tbl_Araba AS araba "; 
+    	String whereClause = "WHERE (";
+		if(brands.length != 0) {
+			int i = brands.length;
+			int counter=0;
+			for(Object brand : brands) {
+				whereClause = whereClause + "araba.Araba_Marka = '" + brand.toString() + "' ";
+				counter++; 
+				if(counter != i)
+					whereClause = whereClause + " OR ";
+			}
+			whereClause = whereClause + ")";
+		}
+		if(whereClause.length() < 8)
+			whereClause = "";
+		
+		query = query + whereClause + "ORDER BY Araba_Model";
+    	PreparedStatement stm;
+    	ResultSet rs = null;
+		try {
+			stm = connection.prepareStatement(query);
+		
+
+    	 rs = stm.executeQuery(query); 
+
+    	while (rs.next()) { 
+    	    String carModel = rs.getString("Araba_Model"); 
+    	    // add group names to the array list
+    	    carModels.add(carModel);
+    	} 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			    	try {
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+
+		}
+    	
+    	return carModels;
+    }
+    
     public ArrayList<String> getCarBrands(Connection connection){
     	ArrayList<String> carBrands = new ArrayList<String>();
     	String query = "SELECT DISTINCT Araba_Marka FROM Tbl_Araba ORDER BY Araba_Marka"; 
@@ -1110,6 +1235,36 @@ public class DatabaseConnector {
 		}
 
     	return data;
+    }
+    public String idToData(Connection connection, String idName,String tableName, String dataName, String data) {
+    	String result = "problem:)";
+    	String query = "SELECT " + idName + " FROM " + tableName + " WHERE " + dataName + " = '" + data + "'"; 
+    	PreparedStatement stm;
+    	ResultSet rs = null;
+		try {
+			stm = connection.prepareStatement(query);
+		
+
+    	 rs = stm.executeQuery(query); 
+
+    	while (rs.next()) { 
+    	    result= rs.getString(idName); 
+    	    // add group names to the array list
+    	} 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			    	try {
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+
+		}
+
+    	return result;
     }
     
     public ArrayList<Object> filterData(String minPrice,String maxPrice,String minKm,String maxKm,

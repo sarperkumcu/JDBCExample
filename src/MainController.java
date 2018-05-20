@@ -49,12 +49,48 @@ public class MainController {
 	static String colFilterData[] = { "Ad", "Brand", "Model", "Price", "Km", "Transmission Type", "Fuel Type", "Color",
 			"Date", "City" };
 
-	private static DefaultTableModel fuel_tableModel = new DefaultTableModel(colFuel, 0);
-	private static DefaultTableModel color_tableModel = new DefaultTableModel(colColor, 0);
-	private static DefaultTableModel city_tableModel = new DefaultTableModel(colCity, 0);
-	private static DefaultTableModel transmission_tableModel = new DefaultTableModel(colTransmission, 0);
-	private static DefaultTableModel car_tableModel = new DefaultTableModel(colCar, 0);
-	private static DefaultTableModel ad_tableModel = new DefaultTableModel(colAd, 0);
+	private static DefaultTableModel fuel_tableModel = new DefaultTableModel(colFuel, 0){
+	    @Override 
+	    public boolean isCellEditable(int row, int column)
+	    {
+	        return column != 0;// add your code here
+	    }
+	};
+	private static DefaultTableModel color_tableModel = new DefaultTableModel(colColor, 0){
+	    @Override 
+	    public boolean isCellEditable(int row, int column)
+	    {
+	        return column != 0;// add your code here
+	    }
+	};
+	private static DefaultTableModel city_tableModel = new DefaultTableModel(colCity, 0){
+	    @Override 
+	    public boolean isCellEditable(int row, int column)
+	    {
+	        return column != 0;// add your code here
+	    }
+	};
+	private static DefaultTableModel transmission_tableModel = new DefaultTableModel(colTransmission, 0){
+	    @Override 
+	    public boolean isCellEditable(int row, int column)
+	    {
+	        return column != 0;// add your code here
+	    }
+	};
+	private static DefaultTableModel car_tableModel = new DefaultTableModel(colCar, 0){
+	    @Override 
+	    public boolean isCellEditable(int row, int column)
+	    {
+	        return column != 0;// add your code here
+	    }
+	};
+	private static DefaultTableModel ad_tableModel = new DefaultTableModel(colAd, 0){
+	    @Override 
+	    public boolean isCellEditable(int row, int column)
+	    {
+	        return column != 0;// add your code here
+	    }
+	};
 	private static DefaultTableModel filterData_tableModel = new DefaultTableModel(colFilterData, 0);
 
 	DefaultComboBoxModel carPageTransmissionTypeModel;
@@ -62,12 +98,25 @@ public class MainController {
 	DefaultComboBoxModel carPageColorModel;
 	DefaultComboBoxModel adPageCarModel;
 	DefaultComboBoxModel adPageCityModel;
+	DefaultComboBoxModel carTableFuelModel;
+	DefaultComboBoxModel carTableTransmissionModel;
+	DefaultComboBoxModel carTableColorModel;
+	DefaultComboBoxModel adTableCityModel;
+	DefaultComboBoxModel adTableCarModel;
+
 
 	JComboBox fuel_comboBox = new JComboBox();
 	JComboBox color_comboBox = new JComboBox();
 	JComboBox transmission_comboBox = new JComboBox();
 	JComboBox adCar_comboBox = new JComboBox();
 	JComboBox adCity_comboBox = new JComboBox();
+	JComboBox fuel_table_comboBox = new JComboBox();
+	JComboBox transmission_table_comboBox = new JComboBox();
+	JComboBox color_table_comboBox = new JComboBox();
+	JComboBox city_table_comboBox = new JComboBox();
+	JComboBox car_table_comboBox = new JComboBox();
+
+
 
 	/**
 	 * Launch the application.
@@ -170,7 +219,6 @@ public class MainController {
 		JLabel label = new JLabel("-");
 		label.setBounds(167, 14, 70, 15);
 		filter_data.add(label);
-
 		km_max_insert_textField = new JTextField();
 		km_max_insert_textField.setText("0");
 		km_max_insert_textField.setBounds(177, 12, 114, 19);
@@ -268,6 +316,7 @@ public class MainController {
 
 		carBrandlist.getSelectedValue();
 
+
 		/*
 		 * carBrandlist.addMouseListener(new MouseAdapter(){ public void
 		 * mouseClicked(MouseEvent e) { if (e.getClickCount() ) { //
@@ -288,8 +337,21 @@ public class MainController {
 			carModelModel.addElement(carModel);
 		carModellist.setModel(carModelModel);
 		filter_carModel_scrollPane.setViewportView(carModellist);
+		
+		carBrandlist.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				carModelModel.removeAllElements();
+				ArrayList<String> carModels = dbc.getCarModels(conn,carBrandlist.getSelectedValuesList().toArray());
+				for (String carModel : carModels)
+					carModelModel.addElement(carModel);
+			}
+		});
 
 		filterData_table = new JTable(filterData_tableModel);
+		filterData_table.setEnabled(false);
+		
+
 		updateFilterTable("Ilan_Adi");
 
 		JScrollPane filterData_scrollPane = new JScrollPane(filterData_table);
@@ -301,7 +363,6 @@ public class MainController {
 		textField.setBounds(51, 64, 240, 19);
 		filter_data.add(textField);
 		textField.setColumns(10);
-
 		JButton btnFilter = new JButton("Filter");
 		   ButtonGroup modelRadioGroup = new ButtonGroup();
 	        
@@ -319,6 +380,11 @@ public class MainController {
 			rdbtnLastMonth.setBounds(1400, 60, 149, 23);
 			modelRadioGroup.add(rdbtnLastMonth);
 			filter_data.add(rdbtnLastMonth);
+			
+			JRadioButton rdbtnAllTimes = new JRadioButton("All Times");
+			rdbtnAllTimes.setBounds(1400, 84, 149, 23);
+			modelRadioGroup.add(rdbtnAllTimes);
+			filter_data.add(rdbtnAllTimes);
 		btnFilter.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -330,6 +396,8 @@ public class MainController {
 					date = rdbtnLastWeek.getText();
 				if(rdbtnToday.isSelected())
 					date = rdbtnToday.getText();
+				if(rdbtnAllTimes.isSelected())
+					date = "";
 
 				ArrayList<Object> filterData= dbc.filterData(price_min_insert_textField.getText(), price_max_insert_textField.getText(),
 														km_min_insert_textField.getText(), km_max_insert_textField.getText(),
@@ -589,6 +657,26 @@ public class MainController {
 		ad.add(ad_scrollPane);
 		ad_scrollPane.setViewportView(ad_table);
 		ad_table.getColumnModel().getColumn(1).setPreferredWidth(600);
+		
+		
+		adTableCityModel = new DefaultComboBoxModel(dbc.getCityNames(conn).toArray());
+		city_table_comboBox.setModel(adTableCityModel);
+		  TableColumn ad_CityColumn = ad_table.getColumnModel().getColumn(6);
+		  ad_CityColumn.setCellEditor(new DefaultCellEditor(city_table_comboBox)); //Set
+		  DefaultTableCellRenderer rendererCity = new
+		  DefaultTableCellRenderer(); 
+		  rendererCity.setToolTipText("Click for combo box");
+		  ad_CityColumn.setCellRenderer(rendererCity);
+		  
+			adTableCarModel = new DefaultComboBoxModel(dbc.getCarIDs(conn).toArray());
+			car_table_comboBox.setModel(adTableCarModel);
+			  TableColumn ad_CarColumn = ad_table.getColumnModel().getColumn(5);
+			  ad_CarColumn.setCellEditor(new DefaultCellEditor(car_table_comboBox)); //Set
+			  DefaultTableCellRenderer rendererCar = new
+			  DefaultTableCellRenderer(); 
+			  rendererCar.setToolTipText("Click for combo box");
+			  ad_CarColumn.setCellRenderer(rendererCar);
+		
 		ad_table.getModel().addTableModelListener(new TableModelListener() {
 
 			public void tableChanged(TableModelEvent e) {
@@ -598,11 +686,14 @@ public class MainController {
 					System.out.println("Fafafaf " + row);
 
 					if (row != -1) {
+						
 						String value = ad_table.getModel().getValueAt(row, 0).toString();
-						dbc.updateRecord(conn, value, "Tbl_Ilan", row, car_tableModel);
+						System.out.println(value);
+						dbc.updateRecord(conn, value, "Tbl_Ilan", row, col, ad_tableModel);
 					}
 
 					updateAdTable();
+					updateFilterTable("Ilan_Adi");
 					ad_scrollPane.setViewportView(ad_table);
 				}
 			}
@@ -766,27 +857,7 @@ public class MainController {
 		color_btnDelete.setBounds(588, 493, 117, 25);
 		color.add(color_btnDelete);
 
-		color_update_textField = new JTextField();
-		color_update_textField.setBounds(588, 349, 114, 19);
-		color.add(color_update_textField);
-		color_update_textField.setColumns(10);
 
-		JLabel lblNewColorType = new JLabel("New Color Name");
-		lblNewColorType.setBounds(467, 349, 114, 15);
-		color.add(lblNewColorType);
-
-		JButton color_btnUpdate = new JButton("Update");
-		color_btnUpdate.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				int row = color_table.getSelectedRow();
-				String value = color_table.getModel().getValueAt(row, 0).toString();
-				updateColorTable();
-				color_scrollPane.setViewportView(color_table);
-			}
-		});
-		color_btnUpdate.setBounds(588, 408, 117, 25);
-		color.add(color_btnUpdate);
 
 		/*****
 		 * 
@@ -867,27 +938,6 @@ public class MainController {
 		fuel_btnDelete.setBounds(588, 493, 117, 25);
 		fuel.add(fuel_btnDelete);
 
-		fuel_update_textField = new JTextField();
-		fuel_update_textField.setBounds(588, 349, 114, 19);
-		fuel.add(fuel_update_textField);
-		fuel_update_textField.setColumns(10);
-
-		JLabel lblNewFuelType = new JLabel("New Fuel Type");
-		lblNewFuelType.setBounds(467, 349, 114, 15);
-		fuel.add(lblNewFuelType);
-
-		JButton fuel_btnUpdate = new JButton("Update");
-		fuel_btnUpdate.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				int row = fuel_table.getSelectedRow();
-				String value = fuel_table.getModel().getValueAt(row, 0).toString();
-				updateFuelTable();
-				fuel_scrollPane.setViewportView(fuel_table);
-			}
-		});
-		fuel_btnUpdate.setBounds(588, 408, 117, 25);
-		fuel.add(fuel_btnUpdate);
 
 		/*
 		 * 
@@ -910,13 +960,30 @@ public class MainController {
 		car.add(lblCarModel);
 		car_table = new JTable(car_tableModel);
 
-		/*
-		 * TableColumn car_fuelTypeColumn = car_table.getColumnModel().getColumn(3);
-		 * car_fuelTypeColumn.setCellEditor(new DefaultCellEditor(fuel_comboBox)); //Set
-		 * up tool tips for the sport cells. DefaultTableCellRenderer renderer = new
-		 * DefaultTableCellRenderer(); renderer.setToolTipText("Click for combo box");
-		 * car_fuelTypeColumn.setCellRenderer(renderer);
-		 */
+		carTableFuelModel = new DefaultComboBoxModel(dbc.getFuelTypes(conn).toArray());
+		fuel_table_comboBox.setModel(carTableFuelModel);
+		  TableColumn car_fuelTypeColumn = car_table.getColumnModel().getColumn(3);
+		  car_fuelTypeColumn.setCellEditor(new DefaultCellEditor(fuel_table_comboBox)); //Set
+		  DefaultTableCellRenderer renderer = new
+		  DefaultTableCellRenderer(); renderer.setToolTipText("Click for combo box");
+		  car_fuelTypeColumn.setCellRenderer(renderer);
+		  
+		  carTableTransmissionModel = new DefaultComboBoxModel(dbc.getTransmissionTypes(conn).toArray());
+			transmission_table_comboBox.setModel(carTableTransmissionModel);
+			  TableColumn car_TransmissionTypeColumn = car_table.getColumnModel().getColumn(4);
+			  car_TransmissionTypeColumn.setCellEditor(new DefaultCellEditor(transmission_table_comboBox)); //Set
+			  DefaultTableCellRenderer rendererTr = new
+			  DefaultTableCellRenderer(); rendererTr.setToolTipText("Click for combo box");
+			  car_TransmissionTypeColumn.setCellRenderer(rendererTr);
+			  
+			  carTableColorModel = new DefaultComboBoxModel(dbc.getColorNames(conn).toArray());
+				color_table_comboBox.setModel(carTableColorModel);
+				  TableColumn car_colorColumn = car_table.getColumnModel().getColumn(5);
+				  car_colorColumn.setCellEditor(new DefaultCellEditor(color_table_comboBox)); //Set
+				  DefaultTableCellRenderer rendererCol = new
+				  DefaultTableCellRenderer(); rendererCol.setToolTipText("Click for combo box");
+				  car_colorColumn.setCellRenderer(rendererCol);
+		 
 		updateCarTable();
 
 		JScrollPane car_scrollPane = new JScrollPane(car_table);
@@ -932,11 +999,15 @@ public class MainController {
 					System.out.println("Fafafaf " + row);
 
 					if (row != -1) {
+						
 						String value = car_table.getModel().getValueAt(row, 0).toString();
+						System.out.println(value);
 						dbc.updateRecord(conn, value, "Tbl_Araba", row, col, car_tableModel);
 					}
 
 					updateCarTable();
+					updateAdTable();
+					updateFilterTable("Ilan_Adi");
 					car_scrollPane.setViewportView(car_table);
 				}
 			}
@@ -1015,17 +1086,20 @@ public class MainController {
 		color_comboBox.setModel(carPageColorModel);
 		car.add(color_comboBox);
 
+		car_table.isCellEditable(0,0);
 		frame.setVisible(true);
 	}
 
 	public void updateFuelTable() {
 		fuel_comboBox.removeAllItems();
+		fuel_table_comboBox.removeAllItems();
 		ArrayList<Object> fuelObjs = dbc.selectAllQuery("Tbl_YakitTuru", conn);
 		fuel_tableModel.setRowCount(0);
 		for (Object o : fuelObjs) {
 			if (o instanceof Fuel) {
 				Object[] data = { ((Fuel) o).getFuelID(), ((Fuel) o).getFuelType() };
 				fuel_comboBox.addItem(((Fuel) o).getFuelType());
+				fuel_table_comboBox.addItem(((Fuel) o).getFuelType());
 				fuel_tableModel.addRow(data);
 			}
 		}
@@ -1033,11 +1107,13 @@ public class MainController {
 	}
 
 	public void updateCityTable() {
+		adCity_comboBox.removeAllItems();
 		ArrayList<Object> cityObjs = dbc.selectAllQuery("Tbl_Sehir", conn);
 		city_tableModel.setRowCount(0);
 		for (Object o : cityObjs) {
 			if (o instanceof City) {
 				Object[] data = { ((City) o).getCityID(), ((City) o).getCityName() };
+				adCity_comboBox.addItem(((City)o).getCityName());
 				city_tableModel.addRow(data);
 			}
 		}
@@ -1046,12 +1122,14 @@ public class MainController {
 
 	public void updateColorTable() {
 		color_comboBox.removeAllItems();
+		color_table_comboBox.removeAllItems();
 		color_tableModel.setRowCount(0);
 		ArrayList<Object> colorObjs = dbc.selectAllQuery("Tbl_Renk", conn);
 		for (Object o : colorObjs) {
 			if (o instanceof Color) {
 				Object[] data = { ((Color) o).getColorID(), ((Color) o).getColorName() };
 				color_comboBox.addItem(((Color) o).getColorName());
+				color_table_comboBox.addItem(((Color) o).getColorName());
 				color_tableModel.addRow(data);
 			}
 		}
@@ -1060,12 +1138,15 @@ public class MainController {
 
 	public void updateTransmissionTable() {
 		transmission_comboBox.removeAllItems();
+		transmission_table_comboBox.removeAllItems();
 		transmission_tableModel.setRowCount(0);
 		ArrayList<Object> transmissionObjs = dbc.selectAllQuery("Tbl_VitesTuru", conn);
 		for (Object o : transmissionObjs) {
 			if (o instanceof Transmission) {
 				Object[] data = { ((Transmission) o).getTransmissionID(), ((Transmission) o).getTransmissionType() };
 				transmission_comboBox.addItem(((Transmission) o).getTransmissionType());
+				transmission_table_comboBox.addItem(((Transmission) o).getTransmissionType());
+
 				transmission_tableModel.addRow(data);
 			}
 		}
@@ -1074,11 +1155,15 @@ public class MainController {
 
 	public void updateCarTable() {
 		car_tableModel.setRowCount(0);
+		adCar_comboBox.removeAllItems();
 		ArrayList<Object> carObjs = dbc.selectAllQuery("Tbl_Araba", conn);
 		for (Object o : carObjs) {
 			if (o instanceof Car) {
 				Object[] data = { ((Car) o).getCarID(), ((Car) o).getCarBrand(), ((Car) o).getCarModel(),
 						((Car) o).getFuelType(), ((Car) o).getTransmissionType(), ((Car) o).getColorName() };
+				
+				adCar_comboBox.addItem(((Car) o).getCarID());
+
 				car_tableModel.addRow(data);
 			}
 		}
