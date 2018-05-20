@@ -9,6 +9,64 @@ public class Ad {
 	private Integer carID;
 	private Integer cityID;
 	private String cityName;
+	private String adCarBrand;
+	private String adCarModel;
+	private Integer adCarTransmissionTypeID;
+	private Integer adCarFuelTypeID;
+	private String adCarTransmissionType;
+	private String adCarFuelType;
+	private Integer adCarColorID;
+	private String adCarColorName;
+	
+	
+	/**
+	 * @return the adCarColorID
+	 */
+	public Integer getAdCarColorID() {
+		return adCarColorID;
+	}
+	/**
+	 * @param adCarColorID the adCarColorID to set
+	 */
+	public void setAdCarColorID(Integer adCarColorID) {
+		this.adCarColorID = adCarColorID;
+	}
+	/**
+	 * @return the adCarColorName
+	 */
+	public String getAdCarColorName() {
+		return adCarColorName;
+	}
+	/**
+	 * @param adCarColorName the adCarColorName to set
+	 */
+	public void setAdCarColorName(String adCarColorName) {
+		this.adCarColorName = adCarColorName;
+	}
+	/**
+	 * @return the adCarBrand
+	 */
+	public String getAdCarBrand() {
+		return adCarBrand;
+	}
+	/**
+	 * @param adCarBrand the adCarBrand to set
+	 */
+	public void setAdCarBrand(String adCarBrand) {
+		this.adCarBrand = adCarBrand;
+	}
+	/**
+	 * @return the adCarModel
+	 */
+	public String getAdCarModel() {
+		return adCarModel;
+	}
+	/**
+	 * @param adCarModel the adCarModel to set
+	 */
+	public void setAdCarModel(String adCarModel) {
+		this.adCarModel = adCarModel;
+	}
 	/**
 	 * @return the adID
 	 */
@@ -104,6 +162,54 @@ public class Ad {
 	 */
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+	/**
+	 * @return the adCarTransmissionTypeID
+	 */
+	public Integer getAdCarTransmissionTypeID() {
+		return adCarTransmissionTypeID;
+	}
+	/**
+	 * @param adCarTransmissionTypeID the adCarTransmissionTypeID to set
+	 */
+	public void setAdCarTransmissionTypeID(Integer adCarTransmissionTypeID) {
+		this.adCarTransmissionTypeID = adCarTransmissionTypeID;
+	}
+	/**
+	 * @return the adCarFuelTypeID
+	 */
+	public Integer getAdCarFuelTypeID() {
+		return adCarFuelTypeID;
+	}
+	/**
+	 * @param adCarFuelTypeID the adCarFuelTypeID to set
+	 */
+	public void setAdCarFuelTypeID(Integer adCarFuelTypeID) {
+		this.adCarFuelTypeID = adCarFuelTypeID;
+	}
+	/**
+	 * @return the adCarTransmissionType
+	 */
+	public String getAdCarTransmissionType() {
+		return adCarTransmissionType;
+	}
+	/**
+	 * @param adCarTransmissionType the adCarTransmissionType to set
+	 */
+	public void setAdCarTransmissionType(String adCarTransmissionType) {
+		this.adCarTransmissionType = adCarTransmissionType;
+	}
+	/**
+	 * @return the adCarFuelType
+	 */
+	public String getAdCarFuelType() {
+		return adCarFuelType;
+	}
+	/**
+	 * @param adCarFuelType the adCarFuelType to set
+	 */
+	public void setAdCarFuelType(String adCarFuelType) {
+		this.adCarFuelType = adCarFuelType;
 	}
 	
 	
